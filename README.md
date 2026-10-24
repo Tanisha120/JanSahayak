@@ -5,13 +5,13 @@ JanSahayak is a working hackathon application engineered specifically for citize
 
 ---
 
-## 🌟 Key Capabilities
+##  Key Capabilities
 
 1. **Voice-First Accessible Interface**:
    - Spoken guidance in **Hindi (हिन्दी)** and **English** with text fallback.
    - High-contrast visual controls, clear icons, and quick-tap choice chips.
    - Every system prompt and explanation has high-quality audio playback (`gTTS`) so low-literacy customers do not need to read the screen.
-2. **Three Cooperating Autonomous Agents**:
+2. **Three Cooperating Agents**:
    - **Intake Agent**: Conducts conversational intake, asks exactly one follow-up question at a time, remembers confirmed slots, handles doubtful speech corrections, and manages bounded clarification loops.
    - **Banking & Scheme Agent**: Matches scheme names to 7 curated government banking and social security records (PMJDY, BSBDA, Regular Savings, PMSBY, PMJJBY, APY, KYC guidance), explains benefits in plain language, cites official URLs, and flags unverified rumors as uncertain. Matching is record retrieval only; it does not verify a customer's claim.
    - **Application Agent**: Enforces strict deterministic validation gates (completeness check, explicit customer confirmation gate, duplicate prevention via idempotency hashing), generates unique reference numbers (`JS-2026-XXXX`), records immutable audit trails, and manages the status lifecycle.
@@ -26,7 +26,7 @@ JanSahayak is a working hackathon application engineered specifically for citize
 
 ---
 
-## 🏛️ Curated Official Knowledge Base
+##  Curated Official Knowledge Base
 
 All banking and scheme guidance is grounded in official Government of India and Reserve Bank of India publications:
 
@@ -44,7 +44,7 @@ All banking and scheme guidance is grounded in official Government of India and 
 
 ---
 
-## 🚀 Quick Setup & Run on Windows
+##  Quick Setup & Run on Windows
 
 ### Prerequisites
 - Python 3.10+ (Tested on Python 3.14 on Windows)
@@ -69,9 +69,9 @@ copy .env.example .env
 Add your Google Gemini or OpenAI API key inside `.env`:
 ```env
 GEMINI_API_KEY=AIzaSy...
-LLM_MODEL=gemini-2.5-flash
+LLM_MODEL=gemini-3.8-flash
 ```
-> **Note**: An API key is **optional**. If no API key is provided, JanSahayak runs seamlessly in an explicitly labeled **Scripted Demo Mode** with deterministic intelligence, ensuring hackathon reviewers can test 100% of the workflows without needing credentials!
+> **Note**: An API key is **optional**. If no API key is provided, JanSahayak runs seamlessly in an explicitly labeled **Scripted Demo Mode** with deterministic intelligence.
 
 ### 4. Run the Application
 ```powershell
@@ -81,33 +81,19 @@ Streamlit will launch in your browser at `http://localhost:8501`.
 
 ---
 
-## 🧪 Automated Test Suite
+## Automated Tests
 
-JanSahayak includes a comprehensive automated test suite covering all core requirements and regression gates:
+Run the test suite from the project folder:
 
 ```powershell
-python -m unittest tests/test_jansahayak.py
+python -m unittest discover -s tests -v
 ```
 
-### Test Coverage Summary (14/14 Passing):
-1. `test_1_complete_request_and_confirmation_gate`: Validates complete submission journey and verifies that omitting explicit customer confirmation is strictly blocked.
-2. `test_2_missing_information_gate`: Verifies that incomplete profiles are caught and missing slots are prompted one at a time.
-3. `test_3_duplicate_submission_prevention`: Verifies that repeated clicks or Streamlit reruns do not create duplicate database records.
-4. `test_4_correction_after_doubtful_speech`: Tests speech correction and doubtful transcription reprompting.
-5. `test_5_missing_or_conflicting_source_evidence`: Validates fact uncertainty detection and source citation integrity.
-6. `test_6_staff_return_correction_and_resubmission`: Verifies end-to-end staff return lifecycle and customer resubmission with updated audit events.
-7. `test_7_status_lookup_and_persistence`: Tests reference ID status tracking, spoken next steps, and SQLite session persistence.
-8. `test_8_external_service_failure_resilience`: Verifies graceful fallback to labeled deterministic mode and safe speech error handling.
-9. `test_9_regression_negative_confirmation_do_not_submit`: Verifies `"do not submit"` halts submission and creates no database record.
-10. `test_10_regression_negative_confirmation_not_correct`: Verifies `"not correct"` routes to intake for correction and creates no database record.
-11. `test_11_regression_negative_confirmation_hindi_nahi_sahi_nahi_hai`: Verifies `"नहीं, सही नहीं है"` routes to intake and creates no database record.
-12. `test_12_regression_ambiguous_confirmation_does_not_submit`: Verifies ambiguous input reprompts without submitting; creates no database record.
-13. `test_13_honest_source_verification_labels`: Verifies that scheme-name matches show "Official source available" (claim not verified, no dates), rumors are marked uncertain, and unknown topics are marked `UNVERIFIED_UNKNOWN_TOPIC`.
-14. `test_14_honest_llm_status_after_fallback`: Verifies provider status honestly reports scripted fallback mode when live AI encounters failure.
+The tests cover customer intake, missing information, confirmation safeguards, duplicate prevention, request tracking, staff review, corrections, language switching and fallback behaviour.
 
----
+Live Gemini API calls, microphone recognition and audio playback require separate manual testing.
 
-## 🎬 Demo Walkthrough Guide
+##  Demo Walkthrough Guide
 
 ### Step 1: Customer Intake (Voice or Text)
 1. In the sidebar, select **🗣️ ग्राहक सेवा (Customer Portal)** and choose **🇮🇳 हिन्दी** or **🇬🇧 English**.
@@ -138,7 +124,7 @@ python -m unittest tests/test_jansahayak.py
 
 ---
 
-## ⚖️ Limitations & Disclaimers
-- **Demo Mode**: Real banking account opening requires physical in-person branch verification, biometrics, and original documentation as mandated by RBI KYC Master Directions.
+##  Limitations & Disclaimers
+- - **Demo only:** JanSahayak prepares and tracks assistance requests. Actual account opening and identity verification are handled by the authorised bank.
 - **No Financial Operations**: JanSahayak does not perform funds transfers, balance inquiries, or credit underwriting.
 - **Synthetic Data**: Never enter real Aadhaar numbers, PAN cards, OTPs, or passwords.
